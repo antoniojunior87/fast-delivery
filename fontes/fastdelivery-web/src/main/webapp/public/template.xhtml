@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <title>Fast Delivery</title>
+        <f:loadBundle var="msgs" basename="strings" />
+    </h:head>
+    <body>
+        <div id="tudo">
+            <div id="topo">
+                <p:menubar id="menuGlobal" autoSubmenuDisplay="true">
+                    <p:menuitem value="${msgs['menu.home']}" url="#" />
+                    <p:menuitem value="${msgs['menu.administracao']}" url="#" />
+                    <p:menuitem value="${msgs['menu.campanha']}" url="#" />
+                    <p:menuitem value="${msgs['menu.pedidos']}" url="#" />
+                    <p:menuitem value="${msgs['menu.long.short']}" url="#" />
+                    <p:menuitem value="${msgs['menu.contratos.trading']}" url="#" />
+                    <p:menuitem value="${msgs['menu.sair']}" url="#" />
+                </p:menubar>
+            </div>
+            <div class="erro">
+                <ui:insert name="mensagens" />
+            </div>
+            <br />
+            <div id="conteudo">
+                <ui:insert name="conteudoPagina" />
+            </div>
+            <div id="rodape">
+                <table style="width: 100%">
+                    <tr>
+                        <td>Radapé do exemplo</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
