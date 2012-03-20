@@ -9,10 +9,11 @@
     <ui:define name="conteudoPagina">
         <h:form>
             <h:panelGrid id="panelAcao">
-                <p:inputText id="inputDscAcao" value="#{acaoController.acao.dscAcao}" maxlength="20" />
+                <p:inputText value="#{pessoaFaces.pessoa.nome}"/>
+                <p:inputText value="#{pessoaFaces.pessoa.cpf}"/>
                 <h:panelGroup>
-                    <p:commandButton value="#{bundle.btn_cancelar}"/>
-                    <p:commandButton  value="#{bundle.btn_salvar}"/>
+                    <p:commandButton action="#{pessoaFaces.limpar()}" value="#{bundle.btn_limpar}" update="panelAcao"/>
+                    <p:commandButton action="#{pessoaFaces.salvar()}" value="#{bundle.btn_salvar}" update="panelAcao"/>
                 </h:panelGroup>
             </h:panelGrid>
         </h:form>
