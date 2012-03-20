@@ -7,14 +7,6 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/template.xhtml">
     <ui:define name="conteudoPagina">
-        <h:form>
-            <h:panelGrid id="panelAcao">
-                <p:inputText id="inputDscAcao" value="#{acaoController.acao.dscAcao}" maxlength="20" />
-                <h:panelGroup>
-                    <p:commandButton value="#{bundle.btn_cancelar}"/>
-                    <p:commandButton  value="#{bundle.btn_salvar}"/>
-                </h:panelGroup>
-            </h:panelGrid>
-        </h:form>
+        <p:notificationBar />
     </ui:define>
 </ui:composition>
