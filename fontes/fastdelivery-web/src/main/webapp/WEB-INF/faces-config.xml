@@ -7,6 +7,10 @@
         <locale-config>
             <default-locale>pt_BR</default-locale>
         </locale-config>
-        <message-bundle></message-bundle>
+        <resource-bundle>
+            <base-name>messages</base-name>
+            <var>bundle</var>
+        </resource-bundle>
+        <message-bundle>messages</message-bundle>
     </application>
 </faces-config>
