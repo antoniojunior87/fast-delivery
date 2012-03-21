@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
     <name>fastdelivery</name>
     <modules>
-        <module>../fastdelivery-ejb</module>
+        <module>../fastdelivery-service</module>
         <module>../fastdelivery-web</module>
     </modules>
     <build>
