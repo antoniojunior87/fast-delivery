@@ -6,6 +6,25 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/security
-		http://www.springframework.org/schema/security/spring-security-3.1.xsd">
-	
+		http://www.springframework.org/schema/security/spring-security-3.1.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd" xmlns:context="http://www.springframework.org/schema/context">
+
+                    
+    <!-- enables @PersistenceUnit/@PersistenceContext annotations -->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+ 
+<!-- use persistence.xml for JPA configuration -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+	<!-- needed for multiple persistence units -->
+        <property name="persistenceUnitName" value="mydb" />
+    </bean>
+ 
+<!-- enables JPA transaction manager -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+                    
+    <context:component-scan base-package="br.com.fastdelivery.service.impl"/>
+    <context:component-scan base-package="br.com.fastdelivery.infra.dao"/>
+    <context:component-scan base-package="br.com.fastdelivery.infra.spring"/>
 </beans>
