@@ -4,6 +4,8 @@ import br.com.fastdelivery.entity.Pessoa;
 import br.com.fastdelivery.infra.faces.BaseFaces;
 import br.com.fastdelivery.service.PessoaService;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -19,7 +21,11 @@ public class PessoaFaces extends BaseFaces implements Serializable {
 
     @PostConstruct
     public void init() {
-        pessoa = new Pessoa();
+        try {
+            pessoa = getService().obterPessoaPorId(1L);
+        } catch (Exception ex) {
+            Logger.getLogger(PessoaFaces.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void limpar() {
