@@ -14,11 +14,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class PessoaServiceImpl implements PessoaService {
 
     @Inject
-    private IDao<Pessoa> pessoaService;
+    private IDao<Pessoa> pessoaDao;
 
     @Transactional(readOnly = false)
     @Override
     public void inserirPessoa(Pessoa p) throws Exception {
-        pessoaService.salvar(p);
+        pessoaDao.salvar(p);
+    }
+    
+    @Transactional(readOnly = true)
+    @Override
+    public Pessoa obterPessoaPorId(Long pId) throws Exception {
+        return pessoaDao.carregarLoad(pId);
     }
 }
