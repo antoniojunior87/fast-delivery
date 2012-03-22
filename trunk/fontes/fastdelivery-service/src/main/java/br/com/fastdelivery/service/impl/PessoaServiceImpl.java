@@ -25,6 +25,6 @@ public class PessoaServiceImpl implements PessoaService {
     @Transactional(readOnly = true)
     @Override
     public Pessoa obterPessoaPorId(Long pId) throws Exception {
-        return pessoaDao.carregarLoad(pId);
+        return pessoaDao.carregarGet(pId);
     }
 }

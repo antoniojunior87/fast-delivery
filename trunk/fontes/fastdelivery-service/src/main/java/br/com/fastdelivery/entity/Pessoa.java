@@ -13,7 +13,7 @@ public class Pessoa implements Serializable {
     @Id
     @GeneratedValue(generator = "SQ_ID_PESSOA", strategy = GenerationType.SEQUENCE)
     private Long id;
-    @Column(name = "PESSOA")
+    @Column(name = "NOME")
     private String nome;
     @Column(name = "CPF")
     private String cpf;
