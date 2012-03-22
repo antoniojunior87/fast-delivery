@@ -3,28 +3,36 @@
        xmlns:security="http://www.springframework.org/schema/security"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:beans="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security-3.1.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd" xmlns:context="http://www.springframework.org/schema/context">
-
+                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
                     
     <!-- enables @PersistenceUnit/@PersistenceContext annotations -->
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
  
-<!-- use persistence.xml for JPA configuration -->
+    <!-- use persistence.xml for JPA configuration -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
 	<!-- needed for multiple persistence units -->
-        <property name="persistenceUnitName" value="mydb" />
+        <property name="persistenceUnitName" value="fastdeliveryPU" />
     </bean>
- 
-<!-- enables JPA transaction manager -->
+    <!-- enables JPA transaction manager -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
-                    
+    <tx:annotation-driven  transaction-manager="transactionManager"/>
+    
+    <!-- Load Spring Util And Services -->
     <context:component-scan base-package="br.com.fastdelivery.service.impl"/>
-    <context:component-scan base-package="br.com.fastdelivery.infra.dao"/>
     <context:component-scan base-package="br.com.fastdelivery.infra.spring"/>
+
+    <!-- DAOs -->
+    <bean id="pessoaDao" class="br.com.fastdelivery.infra.dao.GenericDao">  
+        <constructor-arg index="0" type="java.lang.Class" value="br.com.fastdelivery.entity.Pessoa" />
+    </bean> 
 </beans>

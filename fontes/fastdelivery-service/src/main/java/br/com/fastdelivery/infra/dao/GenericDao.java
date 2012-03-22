@@ -1,39 +1,50 @@
 package br.com.fastdelivery.infra.dao;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.*;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
-import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Junior
  */
-@Scope(value = "singleton")
+@Repository
 public class GenericDao<T> implements IDao<T>, Serializable {
 
-    @PersistenceContext(name = "fastdeliveryPU")
-    static EntityManager entityManager;
     private static final long serialVersionUID = -5786630429581694776L;
+    @PersistenceContext(name = "fastdeliveryPU")
+    private EntityManager entityManager;
+    private Class<T> persistentClass;
     private Session session;
 
+    public GenericDao(Class<T> pPersistentClass, EntityManager pEntityManager) {
+        this.entityManager = pEntityManager;
+        this.persistentClass = pPersistentClass;
+    }
+    
+    public GenericDao(Class<T> pPersistentClass) {
+        this.persistentClass = pPersistentClass;
+    }
     
     public GenericDao() {
-//        Logger.getLogger(GenericDao.class).info("***********  GenericDao Criado *******************");
+        this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
     public EntityManager getEntityManager() throws Exception {
         return entityManager;
+    }
+
+    public Class<T> getPersistentClass() {
+        return persistentClass;
     }
 
     public Session getSession() throws Exception {
@@ -67,39 +78,41 @@ public class GenericDao<T> implements IDao<T>, Serializable {
         getSession().flush();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public T carregarLoad(T objeto, Integer id) throws Exception {
+    public T carregarLoad(Integer id) throws Exception {
         Session lSession = (Session) getEntityManager().getDelegate();
-        return (T) lSession.load(objeto.getClass(), id);
+        return (T) lSession.load(getPersistentClass(), id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public T carregarGet(T objeto, Integer id) throws Exception {
+    public T carregarGet(Integer id) throws Exception {
         Session lSession = (Session) getEntityManager().getDelegate();
-        return (T) lSession.get(objeto.getClass(), id);
+        return (T) lSession.get(getPersistentClass(), id);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public T carregarLoad(T objeto, Serializable id) throws Exception {
+    public T carregarLoad(Serializable id) throws Exception {
         Session lSession = (Session) getEntityManager().getDelegate();
-        return (T) lSession.load(objeto.getClass(), id);
+        return (T) lSession.load(getPersistentClass(), id);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public T carregarGet(T objeto, Serializable id) throws Exception {
+    public T carregarGet(Serializable id) throws Exception {
         Session lsession = (Session) getEntityManager().getDelegate();
-        return (T) lsession.get(objeto.getClass(), id);
+        return (T) lsession.get(getPersistentClass(), id);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public List<T> listarTodos(T objeto) throws Exception {
+    public T findByIdAndLock(Serializable id) throws Exception {
+        T entity = (T) getEntityManager().find(getPersistentClass(), id, LockModeType.WRITE);
+        return entity;
+    }
+
+    @Override
+    public List<T> listarTodos() throws Exception {
         Session lSession = (Session) getEntityManager().getDelegate();
-        Criteria criteria = lSession.createCriteria(objeto.getClass());
+        Criteria criteria = lSession.createCriteria(getPersistentClass());
         return criteria.list();
     }
 
@@ -113,7 +126,6 @@ public class GenericDao<T> implements IDao<T>, Serializable {
         return listarPorExemplo(objeto, null);
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public List<T> listarPorExemplo(T objeto, MatchMode matchMode) throws Exception {
         Session lSession = (Session) getEntityManager().getDelegate();
@@ -127,7 +139,6 @@ public class GenericDao<T> implements IDao<T>, Serializable {
         return (List) criteria.list();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public T buscarEntidadePorExemplo(T objeto) throws Exception {
         Session lSession = (Session) getEntityManager().getDelegate();
@@ -152,7 +163,6 @@ public class GenericDao<T> implements IDao<T>, Serializable {
         return buscarPorNamedQuery(namedQuery, null);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<T> buscarPorNamedQuery(String namedQuery, Map<String, Object> parametros) throws Exception {
         if (parametros == null) {
@@ -196,13 +206,11 @@ public class GenericDao<T> implements IDao<T>, Serializable {
         return example;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public T buscarPorCriteria(DetachedCriteria detachedCriteria) throws Exception {
         return (T) detachedCriteria.getExecutableCriteria(getSession()).uniqueResult();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<T> listarPorCriteria(DetachedCriteria detachedCriteria, Order... order) throws Exception {
         if (order != null) {
@@ -213,7 +221,6 @@ public class GenericDao<T> implements IDao<T>, Serializable {
         return (List<T>) detachedCriteria.getExecutableCriteria(getSession()).list();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<T> buscarPorNativeQuery(String sql) throws Exception {
         return entityManager.createNativeQuery(sql).getResultList();
@@ -227,7 +234,6 @@ public class GenericDao<T> implements IDao<T>, Serializable {
         return example;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public T buscarEntidadePorNamedQuery(String namedQuery, Map<String, Object> parametros) throws Exception {
         Query query = createQuery(namedQuery, parametros);
