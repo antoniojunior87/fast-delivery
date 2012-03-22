@@ -6,10 +6,11 @@ import java.io.Serializable;
 /**
  * @author Junior
  */
-public class BaseFaces implements Serializable{
+public abstract class BaseFaces implements Serializable{
 
-    public <T> T getService(Class<T> pClass) {
-
+    public abstract <T> T getService();
+    
+    protected <T> T getService(Class<T> pClass) {
         return SpringUtil.getService(pClass);
     }
 }

@@ -8,4 +8,5 @@ import br.com.fastdelivery.entity.Pessoa;
 public interface PessoaService {
 
     public void inserirPessoa(Pessoa pessoa) throws Exception;
+    public Pessoa obterPessoaPorId(Long pId) throws Exception;
 }
