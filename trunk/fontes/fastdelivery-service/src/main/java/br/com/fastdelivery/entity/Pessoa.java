@@ -7,11 +7,11 @@ import javax.persistence.*;
  * @author Junior
  */
 @Entity(name = "PESSOA")
+@SequenceGenerator(schema = "public", name = "SQ_ID_PESSOA", sequenceName = "SQ_ID_PESSOA", allocationSize = 1, initialValue = 1)
 public class Pessoa implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "SQ_ID_PESSOA", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "SQ_ID_PESSOA", sequenceName = "SQ_ID_PESSOA", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(generator = "SQ_ID_PESSOA", strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "PESSOA")
     private String nome;

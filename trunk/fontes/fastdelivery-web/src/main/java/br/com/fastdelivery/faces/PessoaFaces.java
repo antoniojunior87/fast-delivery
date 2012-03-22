@@ -3,6 +3,7 @@ package br.com.fastdelivery.faces;
 import br.com.fastdelivery.entity.Pessoa;
 import br.com.fastdelivery.infra.faces.BaseFaces;
 import br.com.fastdelivery.service.PessoaService;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -11,7 +12,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean(name = "pessoaFaces")
 @ViewScoped
-public class PessoaFaces extends BaseFaces {
+public class PessoaFaces extends BaseFaces implements Serializable {
 
     private Pessoa pessoa = new Pessoa();
 

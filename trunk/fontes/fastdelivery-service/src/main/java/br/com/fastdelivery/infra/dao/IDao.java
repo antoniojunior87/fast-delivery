@@ -16,15 +16,17 @@ public interface IDao<T> {
 
     public void salvarOuAtualizar(T objeto) throws Exception;
 
-    public T carregarLoad(T objeto, Integer id) throws Exception;
+    public T carregarLoad(Integer id) throws Exception;
 
-    public T carregarGet(T objeto, Integer id) throws Exception;
+    public T carregarGet(Integer id) throws Exception;
 
-    public T carregarLoad(T objeto, Serializable id) throws Exception;
+    public T carregarLoad(Serializable id) throws Exception;
 
-    public T carregarGet(T objeto, Serializable id) throws Exception;
+    public T carregarGet(Serializable id) throws Exception;
+    
+    public T findByIdAndLock(Serializable id) throws Exception;
 
-    public List<T> listarTodos(T objeto) throws Exception;
+    public List<T> listarTodos() throws Exception;
 
     public void atualizar(T objeto) throws Exception;
 
