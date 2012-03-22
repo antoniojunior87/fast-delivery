@@ -1,0 +1,9 @@
+-- Pessoa
+CREATE SEQUENCE SQ_ID_PESSOA INCREMENT 1 MINVALUE 1 START 1;
+CREATE TABLE PESSOA
+(
+  ID integer NOT NULL DEFAULT nextval(('SQ_ID_PESSOA'::text)::regclass),
+  NOME character varying(100) NOT NULL,
+  CPF character varying(11) NOT NULL,
+  CONSTRAINT "PK_ID_PESSOA" PRIMARY KEY (ID)
+);
