@@ -8,13 +8,17 @@
                 template="/template.xhtml">
     <ui:define name="conteudoPagina">
         <h:form>
-            <h:panelGrid id="panelAcao">
-                <p:inputText value="#{pessoaFaces.pessoa.nome}"/>
-                <p:inputText value="#{pessoaFaces.pessoa.cpf}"/>
-                <h:panelGroup>
-                    <p:commandButton action="#{pessoaFaces.limpar()}" value="#{bundle.btn_limpar}" update="panelAcao"/>
-                    <p:commandButton action="#{pessoaFaces.salvar()}" value="#{bundle.btn_salvar}" update="panelAcao"/>
-                </h:panelGroup>
+            <h:panelGrid id="painelAcao" columns="2">
+                <h:outputText value="#{bundle.label_pessoa_nome}"/>
+                <p:inputText value="#{pessoaFaces.pessoa.nome}" alt="#{bundle.label_pessoa_nome}"/>
+                <h:outputText value="#{bundle.label_pessoa_cpf}"/>
+                <p:inputMask value="#{pessoaFaces.pessoa.cpf}" alt="#{bundle.label_pessoa_cpf}" mask="#{bundle.mask_cpf}" />
+                <h:outputText value="#{bundle.label_endereco_rua}"/>
+                <p:inputText value="#{pessoaFaces.endereco.rua}" alt="#{bundle.label_endereco_rua}"/>
+            </h:panelGrid>
+            <h:panelGrid id="painelBotoes" columns="2">
+                <p:commandButton action="#{pessoaFaces.limpar()}" value="#{bundle.btn_limpar}" update="painelAcao"/>
+                <p:commandButton action="#{pessoaFaces.salvar()}" value="#{bundle.btn_salvar}" update="painelAcao"/>
             </h:panelGrid>
         </h:form>
     </ui:define>
