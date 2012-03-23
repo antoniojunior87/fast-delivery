@@ -28,11 +28,14 @@
     <tx:annotation-driven  transaction-manager="transactionManager"/>
     
     <!-- Load Spring Util And Services -->
-    <context:component-scan base-package="br.com.fastdelivery.service.impl"/>
     <context:component-scan base-package="br.com.fastdelivery.infra.spring"/>
+    <context:component-scan base-package="br.com.fastdelivery.service.impl"/>
 
     <!-- DAOs -->
     <bean id="pessoaDao" class="br.com.fastdelivery.infra.dao.GenericDao">  
         <constructor-arg index="0" type="java.lang.Class" value="br.com.fastdelivery.entity.Pessoa" />
+    </bean>
+    <bean id="enderecoDao" class="br.com.fastdelivery.infra.dao.GenericDao">  
+        <constructor-arg index="0" type="java.lang.Class" value="br.com.fastdelivery.entity.Endereco" />
     </bean> 
 </beans>

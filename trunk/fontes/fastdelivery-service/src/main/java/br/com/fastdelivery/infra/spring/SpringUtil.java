@@ -1,6 +1,8 @@
 package br.com.fastdelivery.infra.spring;
 
+import br.com.fastdelivery.infra.dao.IDao;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Scope;
@@ -17,11 +19,16 @@ public class SpringUtil implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext pContext) throws BeansException {
+        
         context = pContext;
     }
 
     public static <T> T getService(Class<T> pClass) {
-
+//        context.getAutowireCapableBeanFactory().createBean(pClass, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
         return context.getBean(pClass);
+    }
+
+    public static IDao getIDao(String beanName) {
+        return context.getBean(beanName, IDao.class);
     }
 }
