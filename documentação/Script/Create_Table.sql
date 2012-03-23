@@ -4,6 +4,16 @@ CREATE TABLE PESSOA
 (
   ID integer NOT NULL DEFAULT nextval(('SQ_ID_PESSOA'::text)::regclass),
   NOME character varying(100) NOT NULL,
-  CPF character varying(11) NOT NULL,
+  CPF character varying(14) NOT NULL,
   CONSTRAINT "PK_ID_PESSOA" PRIMARY KEY (ID)
 );
+
+--Endereco
+CREATE SEQUENCE SQ_ID_ENDERECO INCREMENT 1 MINVALUE 1 START 1;
+CREATE TABLE ENDERECO
+(
+   ID integer NOT NULL DEFAULT nextval(('SQ_ID_ENDERECO'::text)::regclass),
+   RUA character varying(100) NOT NULL, 
+   CONSTRAINT PK_ENDERECO PRIMARY KEY (ID)
+);
+
