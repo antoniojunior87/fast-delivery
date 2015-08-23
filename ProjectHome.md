@@ -1,0 +1,1 @@
+A proposta é criar um sistema para terceirizar um serviço de pedidos online para pizzarias, restaurantes e lanchonetes que trabalham com delivery.
